@@ -1,0 +1,170 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Reservation
+ *
+ * @ORM\Table(name="reservations")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\ReservationRepository")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Reservation
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string", length=255)
+     */
+    private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="surname", type="string", length=255)
+     */
+    private $surname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="email", type="string", length=255)
+     */
+    private $email;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Screening", inversedBy="reservations")
+     * @ORM\JoinColumn(name="screening_id", referencedColumnName="id")
+     */
+    private $screening;
+
+    /**
+     * @ORM\OneToMany(targetEntity="ReservedSeat", mappedBy="reservation", cascade={"persist", "remove"})
+     */
+    private $reservedSeats;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     *
+     * @return Reservation
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set screening
+     *
+     * @param \AppBundle\Entity\Screening $screening
+     *
+     * @return Reservation
+     */
+    public function setScreening(\AppBundle\Entity\Screening $screening = null)
+    {
+        $this->screening = $screening;
+
+        return $this;
+    }
+
+    /**
+     * Get screening
+     *
+     * @return \AppBundle\Entity\Screening
+     */
+    public function getScreening()
+    {
+        return $this->screening;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->reservedSeats = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add reservedSeat
+     *
+     * @param \AppBundle\Entity\ReservedSeat $reservedSeat
+     *
+     * @return Reservation
+     */
+    public function addReservedSeat(\AppBundle\Entity\ReservedSeat $reservedSeat)
+    {
+        $this->reservedSeats[] = $reservedSeat;
+
+        return $this;
+    }
+
+    /**
+     * Remove reservedSeat
+     *
+     * @param \AppBundle\Entity\ReservedSeat $reservedSeat
+     */
+    public function removeReservedSeat(\AppBundle\Entity\ReservedSeat $reservedSeat)
+    {
+        $this->reservedSeats->removeElement($reservedSeat);
+    }
+
+    /**
+     * Get reservedSeats
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservedSeats()
+    {
+        return $this->reservedSeats;
+    }
+
+    /**
+     * @ORM\PreFlush()
+     */
+    public function onPreFlush()
+    {
+        $this->createdAt = new \DateTime();
+    }
+}
