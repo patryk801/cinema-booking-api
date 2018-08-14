@@ -17,3 +17,9 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+
+    image_directory: '%kernel.project_dir%/web/images'
+    image_base_url: '/images/'
+
+    accepted_image_extensions: [jpg, jpeg, png, gif]
+    allowed_image_size: 2000000
