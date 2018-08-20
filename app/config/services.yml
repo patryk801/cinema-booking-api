@@ -50,3 +50,26 @@ services:
                     factory: ['@doctrine.orm.default_entity_manager', getRepository]
                     arguments:
                         - AppBundle\Entity\Screening
+
+    AppBundle\Repository\ImageRepository:
+                        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+                        arguments:
+                            - AppBundle\Entity\Image
+
+    AppBundle\Controller\ImagesController:
+            class: AppBundle\Controller\ImagesController
+            arguments:
+                - '%image_directory%'
+                - '%image_base_url%'
+
+    AppBundle\Controller\MoviesController:
+                class: AppBundle\Controller\MoviesController
+                arguments:
+                    - '%image_directory%'
+                    - '%image_base_url%'
+
+    AppBundle\Service\FileUploader:
+        class: AppBundle\Service\FileUploader
+        arguments:
+            - '%accepted_image_extensions%'
+            - '%allowed_image_size%'

@@ -86,9 +86,11 @@ class Movie
     /**
      * @var string
      *
-     * @ORM\Column(name="cover_image", type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="Image")
+     * @ORM\JoinColumn(name="image_id", referencedColumnName="id")
+     *
      */
-    private $coverImage;
+    private $image;
 
     /**
      * @var string
@@ -380,13 +382,13 @@ class Movie
     /**
      * Set coverImage
      *
-     * @param string $coverImage
+     * @param string $image
      *
      * @return Movie
      */
-    public function setCoverImage($coverImage)
+    public function setImage($image)
     {
-        $this->coverImage = $coverImage;
+        $this->image = $image;
 
         return $this;
     }
@@ -396,8 +398,8 @@ class Movie
      *
      * @return string
      */
-    public function getCoverImage()
+    public function getImage()
     {
-        return $this->coverImage;
+        return $this->image;
     }
 }

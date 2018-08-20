@@ -49,3 +49,15 @@ reservations_post:
     defaults:
         _controller: AppBundle\Controller\ReservationsController:postReservationAction
         _format: json
+
+#Images
+images:
+    type: rest
+    resource: AppBundle\Controller\ImagesController
+
+images_post:
+    path: /images
+    methods: [POST]
+    defaults:
+        _controller: AppBundle\Controller\ImagesController:postImageAction
+        _format: json
