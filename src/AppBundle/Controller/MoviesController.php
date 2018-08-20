@@ -3,16 +3,20 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\EntityMerger;
+use AppBundle\Entity\Image;
 use AppBundle\Entity\Movie;
 use AppBundle\Exception\ValidationException;
 use AppBundle\Resource\Filtering\Movie\MovieFilterDefinitionFactory;
 use AppBundle\Resource\Pagination\Movie\MoviePagination;
 use AppBundle\Resource\Pagination\PageFactory;
+use AppBundle\Service\FileUploader;
 use FOS\RestBundle\Controller\ControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 class MoviesController extends AbstractController
@@ -21,11 +25,17 @@ class MoviesController extends AbstractController
 
     private $entityMerger;
     private $moviePagination;
+    private $fileUploader;
+    private $imagesDirectory;
+    private $imageBaseUrl;
 
-    public function __construct(EntityMerger $entityMerger, MoviePagination $moviePagination)
+    public function __construct(string $imagesDirectory, string $imageBaseUrl, EntityMerger $entityMerger, MoviePagination $moviePagination, FileUploader $fileUploader)
     {
         $this->entityMerger = $entityMerger;
         $this->moviePagination = $moviePagination;
+        $this->fileUploader = $fileUploader;
+        $this->imagesDirectory = $imagesDirectory;
+        $this->imageBaseUrl = $imageBaseUrl;
     }
 
     public function getMoviesAction(Request $request)
@@ -53,7 +63,7 @@ class MoviesController extends AbstractController
      * @ParamConverter("movie", converter="fos_rest.request_body")
      * @Rest\NoRoute()
      */
-    public function postMoviesAction(?Movie $movie, ConstraintViolationListInterface $validationErrors)
+    public function postMoviesAction(?Movie $movie, Request $request, ConstraintViolationListInterface $validationErrors)
     {
         if(count($validationErrors) > 0) throw new ValidationException($validationErrors);
 
@@ -92,5 +102,25 @@ class MoviesController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($movie);
         $em->flush();
+    }
+
+
+    public function putMovieImageAction(?Movie $movie, Request $request)
+    {
+        if(is_null($movie)) throw new NotFoundHttpException();
+
+        $fileName = $this->fileUploader->uploadImageFromPutRequest($request, $this->imagesDirectory);
+        if(!is_null($fileName))
+        {
+            $image = new Image();
+            $image->setUrl($this->imageBaseUrl.$fileName);
+            $movie->setImage($image);
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($image);
+            $em->persist($movie);
+            $em->flush();
+
+            return $this->view($image, Response::HTTP_CREATED);
+        }
     }
 }

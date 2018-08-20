@@ -59,9 +59,14 @@ services:
     AppBundle\Controller\ImagesController:
             class: AppBundle\Controller\ImagesController
             arguments:
-                - '@AppBundle\Repository\ImageRepository'
                 - '%image_directory%'
                 - '%image_base_url%'
+
+    AppBundle\Controller\MoviesController:
+                class: AppBundle\Controller\MoviesController
+                arguments:
+                    - '%image_directory%'
+                    - '%image_base_url%'
 
     AppBundle\Service\FileUploader:
         class: AppBundle\Service\FileUploader

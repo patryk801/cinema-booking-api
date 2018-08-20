@@ -27,7 +27,7 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
             ->setCountry('Polska')
             ->setAgeRestrictions('12+')
             ->setReleaseDate(new \DateTime('2018-03-08'))
-            ->setCoverImage('https://i.datapremiery.pl/1/000/14/896/kobieta-sukcesu-cover-okladka.jpg')
+            ->setImage('https://i.datapremiery.pl/1/000/14/896/kobieta-sukcesu-cover-okladka.jpg')
             ->setTrailerYoutubeUrl('https://www.youtube.com/embed/4f_xnB5a7Cs');
 
         $movie2 = new Movie();
@@ -40,7 +40,7 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
             ->setCountry('Polska')
             ->setAgeRestrictions('16+')
             ->setReleaseDate(new \DateTime('2018-03-15'))
-            ->setCoverImage('https://i.datapremiery.pl/1/000/16/196/pitbull-ostatni-pies-cover-okladka.jpg')
+            ->setImage('https://i.datapremiery.pl/1/000/16/196/pitbull-ostatni-pies-cover-okladka.jpg')
             ->setTrailerYoutubeUrl('https://www.youtube.com/embed/i8p0LIwzzRc');
 
         $movie3 = new Movie();
@@ -53,7 +53,7 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
             ->setCountry('Polska')
             ->setAgeRestrictions('12+')
             ->setReleaseDate(new \DateTime('2018-01-05'))
-            ->setCoverImage('https://i.datapremiery.pl/1/000/14/277/gotowi-na-wszystko-exterminator-cover-okladka.jpg')
+            ->setImage('https://i.datapremiery.pl/1/000/14/277/gotowi-na-wszystko-exterminator-cover-okladka.jpg')
             ->setTrailerYoutubeUrl('https://www.youtube.com/embed/Nr1ZtM--opw');
 
         $manager->persist($movie1);
