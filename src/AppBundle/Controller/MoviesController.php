@@ -63,7 +63,7 @@ class MoviesController extends AbstractController
      * @ParamConverter("movie", converter="fos_rest.request_body")
      * @Rest\NoRoute()
      */
-    public function postMoviesAction(?Movie $movie, Request $request, ConstraintViolationListInterface $validationErrors)
+    public function postMoviesAction(?Movie $movie, ConstraintViolationListInterface $validationErrors)
     {
         if(count($validationErrors) > 0) throw new ValidationException($validationErrors);
 
