@@ -61,3 +61,8 @@ images_post:
     defaults:
         _controller: AppBundle\Controller\ImagesController:postImageAction
         _format: json
+
+#Users
+user:
+    resource: '@AppBundle/Controller/UsersController.php'
+    type: annotation
