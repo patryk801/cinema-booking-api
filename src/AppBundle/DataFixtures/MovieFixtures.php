@@ -2,6 +2,7 @@
 
 namespace AppBundle\DataFixtures;
 
+use AppBundle\Entity\Image;
 use AppBundle\Entity\Movie;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -17,6 +18,9 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
         $genre2 = $genreRepository->findOneBy(['name' => 'sensacyjny']);
         $genre3 = $genreRepository->findOneBy(['name' => 'komedia']);
 
+        $image1 = new Image();
+        $image1->setUrl('https://i.datapremiery.pl/1/000/14/896/kobieta-sukcesu-cover-okladka.jpg');
+
         $movie1 = new Movie();
         $movie1
             ->setTitle('Kobieta sukcesu')
@@ -27,8 +31,11 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
             ->setCountry('Polska')
             ->setAgeRestrictions('12+')
             ->setReleaseDate(new \DateTime('2018-03-08'))
-            ->setImage('https://i.datapremiery.pl/1/000/14/896/kobieta-sukcesu-cover-okladka.jpg')
+            ->setImage($image1)
             ->setTrailerYoutubeUrl('https://www.youtube.com/embed/4f_xnB5a7Cs');
+
+        $image2 = new Image();
+        $image2->setUrl('https://i.datapremiery.pl/1/000/16/196/pitbull-ostatni-pies-cover-okladka.jpg');
 
         $movie2 = new Movie();
         $movie2
@@ -40,8 +47,11 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
             ->setCountry('Polska')
             ->setAgeRestrictions('16+')
             ->setReleaseDate(new \DateTime('2018-03-15'))
-            ->setImage('https://i.datapremiery.pl/1/000/16/196/pitbull-ostatni-pies-cover-okladka.jpg')
+            ->setImage($image2)
             ->setTrailerYoutubeUrl('https://www.youtube.com/embed/i8p0LIwzzRc');
+
+        $image3 = new Image();
+        $image3->setUrl('https://i.datapremiery.pl/1/000/14/277/gotowi-na-wszystko-exterminator-cover-okladka.jpg');
 
         $movie3 = new Movie();
         $movie3
@@ -53,8 +63,12 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
             ->setCountry('Polska')
             ->setAgeRestrictions('12+')
             ->setReleaseDate(new \DateTime('2018-01-05'))
-            ->setImage('https://i.datapremiery.pl/1/000/14/277/gotowi-na-wszystko-exterminator-cover-okladka.jpg')
+            ->setImage($image3)
             ->setTrailerYoutubeUrl('https://www.youtube.com/embed/Nr1ZtM--opw');
+
+        $manager->persist($image1);
+        $manager->persist($image2);
+        $manager->persist($image3);
 
         $manager->persist($movie1);
         $manager->persist($movie2);
