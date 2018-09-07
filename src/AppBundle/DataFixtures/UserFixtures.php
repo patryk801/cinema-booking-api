@@ -20,7 +20,6 @@ class UserFixtures extends Fixture
     {
         $user1 = new User();
         $user1->setUsername('patryk');
-        $user1->setApiKey('123');
         $user1->setPassword($this->passwordEncoder->encodePassword($user1, 'pass'));
 
         $manager->persist($user1);

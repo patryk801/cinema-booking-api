@@ -34,13 +34,6 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $apiKey;
-
-    /**
      * @return int
      */
     public function getId(): int
@@ -54,22 +47,6 @@ class User implements UserInterface
     public function setId(int $id): void
     {
         $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getApiKey(): string
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * @param string $apiKey
-     */
-    public function setApiKey(string $apiKey): void
-    {
-        $this->apiKey = $apiKey;
     }
 
     public function getRoles()

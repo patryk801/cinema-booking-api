@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -17,10 +18,12 @@ use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 class UsersController extends AbstractController
 {
     private $passwordEncoder;
+    private $jwtEncoder;
 
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder, JWTEncoderInterface $jwtEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
+        $this->jwtEncoder = $jwtEncoder;
     }
 
     /**
@@ -35,6 +38,13 @@ class UsersController extends AbstractController
         $isPasswordValid = $this->passwordEncoder->isPasswordValid($user, $request->getPassword());
         if(!$isPasswordValid) throw new BadCredentialsException();
 
-        return new JsonResponse(['token' => $user->getApiKey()]);
+        $token = $this->jwtEncoder->encode(
+            [
+                'username' => $user->getUsername(),
+                'exp' => time() + 3600,
+            ]
+        );
+
+        return new JsonResponse(['token' => $token]);
     }
 }

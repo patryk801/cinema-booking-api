@@ -6,9 +6,13 @@ use AppBundle\Entity\Image;
 use AppBundle\Service\FileUploader;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Security("is_anonymous() or is_authenticated()")
+ */
 class ImagesController extends FOSRestController
 {
     private $imagesDirectory;
@@ -24,6 +28,7 @@ class ImagesController extends FOSRestController
 
     /**
      * @Rest\NoRoute()
+     * @Security("is_authenticated()")
      */
     public function postImageAction(Request $request)
     {
