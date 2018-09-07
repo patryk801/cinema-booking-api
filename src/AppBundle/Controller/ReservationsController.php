@@ -9,12 +9,16 @@ use AppBundle\Entity\EntityMerger;
 use AppBundle\Entity\Reservation;
 use AppBundle\Exception\ValidationException;
 use FOS\RestBundle\Controller\ControllerTrait;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+/**
+ * @Security("is_anonymous() or is_authenticated()")
+ */
 class ReservationsController extends Controller
 {
     use ControllerTrait;
@@ -68,6 +72,7 @@ class ReservationsController extends Controller
 
     /**
      * @ParamConverter("modifiedReservation", converter="fos_rest.request_body")
+     * @Security("is_authenticated()")
      */
     public function patchReservationAction(?Reservation $reservation, Reservation $modifiedReservation, ConstraintViolationListInterface $validationErrors)
     {
@@ -86,6 +91,7 @@ class ReservationsController extends Controller
 
     /**
      * @Rest\View(statusCode=204)
+     * @Security("is_authenticated()")
      */
     public function deleteReservationAction(?Reservation $reservation)
     {

@@ -8,10 +8,14 @@ use AppBundle\Exception\ValidationException;
 use Doctrine\Common\Annotations\AnnotationReader;
 use FOS\RestBundle\Controller\ControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
+/**
+ * @Security("is_anonymous() or is_authenticated()")
+ */
 class AuditoriumsController extends AbstractController
 {
     use ControllerTrait;
@@ -53,8 +57,10 @@ class AuditoriumsController extends AbstractController
 
     /**
      * @Rest\View(statusCode=201)
-     * @ParamConverter("auditorium", converter="fos_rest.request_body")
      * @Rest\NoRoute()
+     * @ParamConverter("auditorium", converter="fos_rest.request_body")
+     *
+     * @Security("is_authenticated()")
      */
     public function postAuditoriumsAction(?Auditorium $auditorium, ConstraintViolationListInterface $validationErrors)
     {
@@ -69,6 +75,7 @@ class AuditoriumsController extends AbstractController
 
     /**
      * @ParamConverter("modifiedAuditorium", converter="fos_rest.request_body")
+     * @Security("is_authenticated()")
      */
     public function patchAuditoriumAction(?Auditorium $auditorium, Auditorium $modifiedAuditorium, ConstraintViolationListInterface $validationErrors)
     {
@@ -87,6 +94,7 @@ class AuditoriumsController extends AbstractController
 
     /**
      * @Rest\View(statusCode=204)
+     * @Security("is_authenticated()")
      */
     public function deleteAuditoriumAction(?Auditorium $auditorium)
     {

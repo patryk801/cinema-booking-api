@@ -12,6 +12,7 @@ use AppBundle\Resource\Pagination\PageFactory;
 use AppBundle\Service\FileUploader;
 use FOS\RestBundle\Controller\ControllerTrait;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,6 +20,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
+/**
+ * @Security("is_anonymous() or is_authenticated()")
+ */
 class MoviesController extends AbstractController
 {
     use ControllerTrait;
@@ -62,6 +66,8 @@ class MoviesController extends AbstractController
      * @Rest\View(statusCode=201)
      * @ParamConverter("movie", converter="fos_rest.request_body")
      * @Rest\NoRoute()
+     *
+     * @Security("is_authenticated()")
      */
     public function postMoviesAction(?Movie $movie, ConstraintViolationListInterface $validationErrors)
     {
@@ -76,6 +82,8 @@ class MoviesController extends AbstractController
 
     /**
      * @ParamConverter("modifiedMovie", converter="fos_rest.request_body")
+     *
+     * @Security("is_authenticated()")
      */
     public function patchMovieAction(?Movie $movie, Movie $modifiedMovie, ConstraintViolationListInterface $validationErrors)
     {
@@ -94,6 +102,8 @@ class MoviesController extends AbstractController
 
     /**
      * @Rest\View(statusCode=204)
+     *
+     * @Security("is_authenticated()")
      */
     public function deleteMovieAction(?Movie $movie)
     {
@@ -104,7 +114,9 @@ class MoviesController extends AbstractController
         $em->flush();
     }
 
-
+    /**
+     * @Security("is_authenticated()")
+     */
     public function putMovieImageAction(?Movie $movie, Request $request)
     {
         if(is_null($movie)) throw new NotFoundHttpException();
