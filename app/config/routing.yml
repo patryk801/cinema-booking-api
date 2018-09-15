@@ -62,7 +62,7 @@ images_post:
         _controller: AppBundle\Controller\ImagesController:postImageAction
         _format: json
 
-#Users
-user:
-    resource: '@AppBundle/Controller/UsersController.php'
-    type: annotation
+#Tokens
+tokens:
+    resource: AppBundle\Controller\TokensController
+    type: rest
