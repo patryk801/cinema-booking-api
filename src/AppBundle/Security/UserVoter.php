@@ -4,11 +4,19 @@ namespace AppBundle\Security;
 
 use AppBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
 class UserVoter extends Voter
 {
     const SHOW = 'show';
+
+    private $decisionManager;
+
+    public function __construct(AccessDecisionManagerInterface $decisionManager)
+    {
+        $this->decisionManager = $decisionManager;
+    }
 
     /**
      * Determines if the attribute and subject are supported by this voter.
@@ -38,6 +46,8 @@ class UserVoter extends Voter
      */
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
+        if($this->decisionManager->decide($token, [User::ROLE_ADMIN])) return true;
+
         switch($attribute)
         {
             case self::SHOW:
