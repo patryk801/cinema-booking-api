@@ -8,6 +8,7 @@ use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -24,6 +25,15 @@ class UsersController extends AbstractController
     {
         $this->passwordEncoder = $passwordEncoder;
         $this->jwtEncoder = $jwtEncoder;
+    }
+
+    /**
+     * @Security("is_granted('show', theUser)", message="Access denied")
+     */
+    public function getUserAction(?User $theUser)
+    {
+        if(is_null($theUser)) throw new NotFoundHttpException();
+        return $theUser;
     }
 
     /**
