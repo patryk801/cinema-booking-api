@@ -73,3 +73,8 @@ services:
         arguments:
             - '%accepted_image_extensions%'
             - '%allowed_image_size%'
+
+    AppBundle\EventSubscriber\ResponseSubscriber:
+        class: AppBundle\EventSubscriber\ResponseSubscriber
+        arguments:
+            - '%api_version%'
