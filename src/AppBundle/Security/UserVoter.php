@@ -10,6 +10,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 class UserVoter extends Voter
 {
     const SHOW = 'show';
+    const EDIT = 'edit';
 
     private $decisionManager;
 
@@ -28,7 +29,7 @@ class UserVoter extends Voter
      */
     protected function supports($attribute, $subject)
     {
-        if(!in_array($attribute, [self::SHOW])) return false;
+        if(!in_array($attribute, [self::SHOW, self::EDIT])) return false;
         if(!$subject instanceof User) return false;
 
         return true;
@@ -51,6 +52,7 @@ class UserVoter extends Voter
         switch($attribute)
         {
             case self::SHOW:
+            case self::EDIT:
                 return $this->isUserHimself($subject, $token);
         }
 

@@ -11,7 +11,7 @@ use JMS\Serializer\Annotation as Serializer;
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  * @ORM\Table(name="users")
- * @UniqueEntity("username")
+ * @UniqueEntity("username", groups={"Default", "Patch"})
  */
 class User implements UserInterface
 {
@@ -51,7 +51,7 @@ class User implements UserInterface
      * @Assert\Expression(
      *     "this.getPassword() === this.getRetypedPassword()",
      *     message="Passwords are not the same.",
-     *     groups={"Default"}
+     *     groups={"Default", "Patch"}
      * )
      * @Serializer\Type("string")
      * @Serializer\Groups({"Deserialize"})
