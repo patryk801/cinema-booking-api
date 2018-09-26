@@ -104,7 +104,8 @@ nelmio_cors:
         paths:
             '^/':
                 allow_origin: ['*']
-                allow_methods: ['POST', 'PATCH', 'GET', 'DELETE']
+                allow_headers: ['*']
+                allow_methods: ['POST', 'PATCH', 'GET', 'DELETE', 'OPTIONS']
                 max_age: 3600
 
 lexik_jwt_authentication:
