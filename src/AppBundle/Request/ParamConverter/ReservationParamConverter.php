@@ -23,7 +23,7 @@ class ReservationParamConverter implements ParamConverterInterface
      */
     private $seatRepository;
     /**
-     * @var null|ValidatorInterface
+     * @var ValidatorInterface
      */
     private $validator;
     /**
