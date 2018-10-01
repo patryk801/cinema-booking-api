@@ -37,19 +37,19 @@ services:
         arguments: ['@annotations.reader']
 
     AppBundle\Repository\MovieRepository:
-            factory: ['@doctrine.orm.default_entity_manager', getRepository]
-            arguments:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
                 - AppBundle\Entity\Movie
 
     AppBundle\Repository\ReservationRepository:
-                factory: ['@doctrine.orm.default_entity_manager', getRepository]
-                arguments:
-                    - AppBundle\Entity\Reservation
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Reservation
 
     AppBundle\Repository\ScreeningRepository:
-                    factory: ['@doctrine.orm.default_entity_manager', getRepository]
-                    arguments:
-                        - AppBundle\Entity\Screening
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Screening
 
     AppBundle\Repository\SeatRepository:
         factory: ['@doctrine.orm.default_entity_manager', getRepository]
@@ -57,21 +57,21 @@ services:
             - AppBundle\Entity\Seat
 
     AppBundle\Repository\ImageRepository:
-                        factory: ['@doctrine.orm.default_entity_manager', getRepository]
-                        arguments:
-                            - AppBundle\Entity\Image
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Image
 
     AppBundle\Controller\ImagesController:
-            class: AppBundle\Controller\ImagesController
-            arguments:
-                - '%image_directory%'
-                - '%image_base_url%'
+        class: AppBundle\Controller\ImagesController
+        arguments:
+            - '%image_directory%'
+            - '%image_base_url%'
 
     AppBundle\Controller\MoviesController:
-                class: AppBundle\Controller\MoviesController
-                arguments:
-                    - '%image_directory%'
-                    - '%image_base_url%'
+        class: AppBundle\Controller\MoviesController
+        arguments:
+            - '%image_directory%'
+            - '%image_base_url%'
 
     AppBundle\Service\FileUploader:
         class: AppBundle\Service\FileUploader
