@@ -30,3 +30,4 @@ parameters:
     jwt_public_key_path: '%kernel.root_dir%/../var/jwt/public.pem'
     jwt_key_pass_phrase: 'pass'
     jwt_token_ttl: 3306
+    validation_errors_argument: 'validationErrors'

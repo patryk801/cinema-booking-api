@@ -51,6 +51,11 @@ services:
                     arguments:
                         - AppBundle\Entity\Screening
 
+    AppBundle\Repository\SeatRepository:
+        factory: ['@doctrine.orm.default_entity_manager', getRepository]
+        arguments:
+            - AppBundle\Entity\Seat
+
     AppBundle\Repository\ImageRepository:
                         factory: ['@doctrine.orm.default_entity_manager', getRepository]
                         arguments:
@@ -78,3 +83,10 @@ services:
         class: AppBundle\EventSubscriber\ResponseSubscriber
         arguments:
             - '%api_version%'
+
+    reservation_param_converter:
+        class: AppBundle\Request\ParamConverter\ReservationParamConverter
+        arguments:
+            $validationErrorsArgument: '%validation_errors_argument%'
+        tags:
+            - { name: request.param_converter, priority: -2, converter: reservation_param_converter }

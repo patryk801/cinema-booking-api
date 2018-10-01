@@ -56,7 +56,7 @@ class ReservationsController extends Controller
 
     /**
      * @Rest\View(statusCode=201)
-     * @ParamConverter("reservation", converter="fos_rest.request_body")
+     * @ParamConverter("reservation", converter="reservation_param_converter")
      * @Rest\NoRoute()
      */
     public function postReservationAction(Reservation $reservation, ConstraintViolationListInterface $validationErrors)
