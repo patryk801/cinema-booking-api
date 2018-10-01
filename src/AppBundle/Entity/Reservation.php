@@ -64,7 +64,6 @@ class Reservation
      * @ORM\ManyToOne(targetEntity="Screening", inversedBy="reservations")
      * @ORM\JoinColumn(name="screening_id", referencedColumnName="id")
      *
-     * @Serializer\Exclude()
      */
     private $screening;
 
