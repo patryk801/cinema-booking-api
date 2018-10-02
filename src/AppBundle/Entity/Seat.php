@@ -34,6 +34,8 @@ class Seat
      */
     private $row;
 
+    private $reserved = false;
+
     /**
      * @ORM\ManyToOne(targetEntity="Auditorium", inversedBy="seats")
      * @ORM\JoinColumn(name="auditorium_id", referencedColumnName="id")
@@ -122,5 +124,21 @@ class Seat
     public function getRow()
     {
         return $this->row;
+    }
+
+    /**
+     * @param bool $reserved
+     */
+    public function setReserved(bool $reserved): void
+    {
+        $this->reserved = $reserved;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReserved(): bool
+    {
+        return $this->reserved;
     }
 }

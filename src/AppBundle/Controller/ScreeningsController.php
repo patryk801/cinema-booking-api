@@ -41,7 +41,7 @@ class ScreeningsController extends AbstractController
     {
         if(is_null($screening)) return $this->view(null, 404);
 
-        return $screening->getAuditorium()->getSeats();
+        return $screening->getSeats();
     }
 
     /**

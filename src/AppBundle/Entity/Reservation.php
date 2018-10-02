@@ -224,4 +224,12 @@ class Reservation
     {
         $this->seats[] = $seat;
     }
+
+    /**
+     * @return \Doctrine\Common\Collections\ArrayCollection
+     */
+    public function getSeats()
+    {
+        return $this->seats;
+    }
 }

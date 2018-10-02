@@ -203,4 +203,23 @@ class Screening
     {
         return $this->reservations;
     }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSeats()
+    {
+        $seats = $this->getAuditorium()->getSeats();
+
+        foreach ($this->getReservations() as $reservation)
+        {
+            foreach ($reservation->getSeats() as $reservedSeat)
+            {
+                $index = $seats->indexOf($reservedSeat);
+                if($index !== false) $seats->get($index)->setReserved(true);
+            }
+        }
+
+        return $seats;
+    }
 }
