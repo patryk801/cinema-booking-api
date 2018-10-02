@@ -43,19 +43,4 @@ class ScreeningsController extends AbstractController
 
         return $screening->getSeats();
     }
-
-    /**
-     * @Rest\NoRoute()
-     */
-    public function getScreeningReservedSeatsAction(?Screening $screening)
-    {
-        $seats = [];
-
-        foreach ($screening->getReservedSeats() as $reservedSeat)
-        {
-            $seats[] = $reservedSeat->getSeat();
-        }
-
-        return $seats;
-    }
 }
